@@ -1,0 +1,15 @@
+{% extends "template.html" %}
+
+{% block content %}
+<body>
+    <div class="container listapessoas">
+    {% for pessoa in pessoas %}
+        <p>Nome: {{ pessoa.nome }}</p>
+        <p>Idade: {{ pessoa.idade }}</p>
+
+    {% endfor %}
+
+    </div>
+    <a href="/novo" class="btn btn-success">CADASTRO</a>
+</body>
+{% endblock content %}

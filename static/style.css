@@ -1,0 +1,21 @@
+body {
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+}
+
+ul li {
+    list-style-type:none;
+}
+
+a {
+    color: black;
+}
+
+.listapessoas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.listapessoas p {
+    border-bottom: 1px solid #ccc;
+}
