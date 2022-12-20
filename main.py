@@ -41,16 +41,7 @@ def login():
 
 @app.route('/autenticar', methods=['POST',])
 def autenticar():
-
-    if app.secret_key == request.form['senha']:
-
-        session['logged_in'] = True
-        flash('DEU BOA')
-        return redirect(url_for('inicio'))
-    
-    else:
-        flash('senha invalida')
-        return redirect(url_for('login'))
+    pass
 
 @app.route('/logout')
 def logout():
