@@ -1,10 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
 from views import *
-
+from controller import auth
+    
 
 app = Flask(__name__)
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 
 app.config.from_pyfile('config.py')
 
@@ -12,8 +13,8 @@ app.config.from_pyfile('config.py')
 @app.route('/')
 def inicio():
     if session:
-        if (session['logged_in'] == True):
-            return render_template('index.html', pessoas=pessoas, title='Home')
+        if (session['usuario_logado'] == True):
+            return render_template('index.html', pessoas=auth.listaPessoas(), title='Home')
         else:
             return redirect(url_for('login'))
     else:
@@ -41,7 +42,16 @@ def login():
 
 @app.route('/autenticar', methods=['POST',])
 def autenticar():
-    pass
+    autenticado = auth.validaLogin(request.form['usuario'], request.form['senha'])
+    if autenticado:
+        session['usuario_logado'] = True
+        
+        flash('Logado com sucesso')
+
+        return redirect(url_for("inicio"))
+        
+        
+        
 
 @app.route('/logout')
 def logout():

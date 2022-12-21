@@ -4,8 +4,8 @@
 <body>
     <div class="container listapessoas">
     {% for pessoa in pessoas %}
-        <p>Nome: {{ pessoa.nome }}</p>
-        <p>Idade: {{ pessoa.idade }}</p>
+        <p>Nome: {{ pessoa[2] }}</p>
+        <p>Login: {{ pessoa[1] }}</p>
 
     {% endfor %}
 

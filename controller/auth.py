@@ -1,33 +1,51 @@
-import psycopg2
 import hashlib
-from flask import render_template, request, redirect, session, flash, url_for
-
-def autenticar(session, user, password):
-    try:
-        conn = psycopg2.connect(host = "localhost", port = "5435", database = "postgres", user="teste", password = "123456")
-        print("BOOOM!!")
-    except:
-        print("Erro ao conectar")
-        conn = False
+import sqlite3
 
 
-    if conn:
+try:
+    conn = sqlite3.connect('agenda.db', check_same_thread=False)
+except:
+    print("Erro ao connectar com o banco")
+    conn = False
 
-        cursor = conn.cursor()
-        
-        cursor.execute("SELECT * FROM login_access;")
+if conn:
+    print("Ainda funfando")
     
-        user_db = User.query.filter_by(user=user).first()
-        
-        if session:
-            if (session['logged_in'] == True):
-                return redirect(url_for('inicio'))
-                
+cursor = conn.cursor()
 
-        elif (user_db.senha == hashlib.sha256(input("Senha: ").encode('utf-8')).hexdigest()):
-            session['logged_in'] = True
-            return redirect(url_for('inicio'))
+def validaLogin(usuario, senha):
 
-        else:
-            flash('senha invalida')
-            return redirect(url_for('login'))
+    sql_select_query = """select * FROM usuario WHERE username = ?"""
+    cursor.execute(sql_select_query, (usuario,))
+    records = cursor.fetchall()
+
+    print(records)
+    
+    if records == []:
+        print("Erro")
+        return "Erro"
+
+    #print(records[0][4])
+    
+    if records[0][4] == hashlib.sha256(senha.encode('utf-8')).hexdigest():
+        print("Senha correta")
+        return True
+    
+    # if session:
+    #     if (session['logged_in'] == True):
+    #         return redirect(url_for('inicio'))
+            
+
+    # elif (user_db.senha == hashlib.sha256(input("Senha: ").encode('utf-8')).hexdigest()):
+    #     session['logged_in'] = True
+    #     return redirect(url_for('inicio'))
+
+    # else:
+    #     flash('senha invalida')
+    #     return redirect(url_for('login'))
+
+def listaPessoas():
+    sql_select_query = """select * FROM usuario"""
+    cursor.execute(sql_select_query)
+    records = cursor.fetchall()
+    return records
