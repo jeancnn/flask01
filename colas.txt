@@ -1,0 +1,14 @@
+    <ul>
+
+        {% for semanas in calDays %}
+
+        <li>{{ DIAS_DA_SEMANA[loop.index] }}</li>
+
+            {% for dias in semanas %}
+            
+            <li>{{ dias }}</li>
+            
+            {% endfor %}
+        {% endfor %}
+
+    </ul>

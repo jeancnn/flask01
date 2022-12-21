@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, session, flash, url_for
 from main import app, db
 from models import Game, User
+import calendar
 
 
 
@@ -8,7 +9,12 @@ from models import Game, User
 def inicio():
     if session:
         if (session['logged_in'] == True):
-            return render_template('index.html', pessoas=pessoas, title='Home')
+            
+            cal = calendar.Calendar(firstweekday=6)
+            DIAS_DA_SEMANA = ("MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY")
+            calDays = cal.monthdayscalendar(2022, 12)
+
+            return render_template('calendario.html', calDays=calDays, aux=0, DIAS_DA_SEMANA=DIAS_DA_SEMANA)
         else:
             return redirect(url_for('login'))
     else:

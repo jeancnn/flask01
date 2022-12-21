@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, session, flash, url
 from flask_sqlalchemy import SQLAlchemy
 from views import *
 from controller import auth
-    
+import calendar
+
 
 app = Flask(__name__)
 #db = SQLAlchemy(app)
@@ -14,7 +15,12 @@ app.config.from_pyfile('config.py')
 def inicio():
     if session:
         if (session['usuario_logado'] == True):
-            return render_template('index.html', pessoas=auth.listaPessoas(), title='Home')
+
+            cal = calendar.Calendar(firstweekday=6)
+            DIAS_DA_SEMANA = ("MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY")
+            calDays = cal.monthdayscalendar(2022, 12)
+
+            return render_template('calendario.html', calDays=calDays, aux=0, DIAS_DA_SEMANA=DIAS_DA_SEMANA)
         else:
             return redirect(url_for('login'))
     else:
