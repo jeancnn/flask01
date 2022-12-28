@@ -1,15 +1,13 @@
 from flask import render_template, request, redirect, session, flash, url_for
-from main import app, db
-from models import Game, User
+from main import app
+from controller.users_controller import listAllUsers
 import calendar
 
-
-
 @app.route('/')
-def inicio():
+def home():
     if session:
-        if (session['logged_in'] == True):
-            
+        if (session['usuario_logado'] == True):
+
             cal = calendar.Calendar(firstweekday=6)
             DIAS_DA_SEMANA = ("MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY")
             calDays = cal.monthdayscalendar(2022, 12)
@@ -20,8 +18,8 @@ def inicio():
     else:
         return redirect('/login')
 
-@app.route('/novo')
-def novo():
+@app.route('/new_user')
+def new_user():
     if session:
         if (session['logged_in'] == True):
                 return render_template('cadastro.html', pessoas=pessoas, title='Cadastro')
@@ -30,31 +28,33 @@ def novo():
     
 
 
-@app.route('/cadastro', methods=['POST'])
-def cadastrar():
-    pessoas.append(Pessoa(request.form['nome'], request.form['idade']))
-    return redirect(url_for('inicio'))
-
+@app.route('/new_event', methods=['POST'])
+def new_event():
+    pass
 
 @app.route('/login')
 def login():
-    return render_template('login.html', titulo = 'Login Usuario')
+    return render_template('login.html', titulo = 'User login')
 
-@app.route('/autenticar', methods=['POST',])
+@app.route('/autenticate', methods=['POST',])
 def autenticar():
+    autenticado = auth.validaLogin(request.form['usuario'], request.form['senha'])
+    if autenticado:
+        session['usuario_logado'] = True
+        
+        flash('Successfully logged in')
 
-    if app.secret_key == request.form['senha']:
-
-        session['logged_in'] = True
-        flash('DEU BOA')
-        return redirect(url_for('inicio'))
-    
-    else:
-        flash('senha invalida')
-        return redirect(url_for('login'))
-
+        return redirect(url_for("home"))
+        
 @app.route('/logout')
 def logout():
     session.clear()
     flash('VOCE FOi DESCONECTADO')
     return redirect(url_for('login'))
+
+
+@app.route('/user_list')
+def user_list():
+    pessoas = listAllUsers()
+    print(pessoas)
+    return render_template('list_all.html', titulo = 'User list', pessoas=pessoas)
