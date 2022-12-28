@@ -1,5 +1,8 @@
 from database import create_db_and_tables
 from sqlmodel import Session, select
+import hashlib
+from controller.auth import validateLogin
+
 
 from database import engine
 from models.calendar_model import User, Event
@@ -7,7 +10,7 @@ from controller.users_controller import listAllUsers
 
 def createUser():
     with Session(engine) as session:
-        new_user = User(id=None,user_name=input("User name: "),name=input("Full name: "),password=input("Password: "))
+        new_user = User(id=None,user_name=input("User name: "),name=input("Full name: "),password=hashlib.sha256(input("Password: ").encode('utf-8')).hexdigest())
         session.add(new_user)
         session.commit()
         session.refresh(new_user)
@@ -21,12 +24,18 @@ def createEvents():
         session.refresh(new_event)
         print(new_event)
 
-    
-### Uncoment to create Events
-#createEvents()
+
+
+test = validateLogin("jean", "123")
+
+print(test)
+
 
 ### Uncoment to create Users
 #createUser()
+
+### Uncoment to create Events
+#createEvents()
 
 ### Finds a User and returns it with its respective Events
 # with Session(engine) as session:

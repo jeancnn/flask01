@@ -1,5 +1,6 @@
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
+import hashlib
 
 from models.calendar_model import User, Event
 
@@ -14,3 +15,15 @@ def listAllUsers():
         ### The .all() is used to return the result as an Object, otherwise the return will be shown as a object in the memory. The .first() also can be used to return a single object.
         return user.all()
     
+def createUser(user_name, name, password, admin=False):
+    if admin == "True":
+        admin = True
+    else:
+        admin = False
+        
+    with Session(engine) as session:
+        new_user = User(id=None,user_name=user_name,name=name,password=hashlib.sha256(password.encode('utf-8')).hexdigest(), admin=admin)
+        session.add(new_user)
+        session.commit()
+        session.refresh(new_user)
+        print(new_user)

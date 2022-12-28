@@ -1,51 +1,30 @@
 import hashlib
-import sqlite3
+from sqlmodel import Session, select
+#from sqlalchemy.orm import selectinload
 
+from models.calendar_model import User, Event
 
-try:
-    conn = sqlite3.connect('agenda.db', check_same_thread=False)
-except:
-    print("Erro ao connectar com o banco")
-    conn = False
+from database import engine
 
-if conn:
-    print("Ainda funfando")
-    
-cursor = conn.cursor()
+def validateLogin(user, password):
 
-def validaLogin(usuario, senha):
+    with Session(engine) as session:
+        ### The option .options(selectinload(User.events)) has to me used so that the query returns the data instead o "lazy loading" it
+        ### if removed the option, you will have to use de data only inside of a session otherwise an error will be trown as lazy load problem.
+        statement = select(User).where(User.user_name == user)
+        user_db = session.exec(statement).first()
+        ### The .all() is used to return the result as an Object, otherwise the return will be shown as a object in the memory. The .first() also can be used to return a single object.
+        #return user.all()
 
-    sql_select_query = """select * FROM usuario WHERE username = ?"""
-    cursor.execute(sql_select_query, (usuario,))
-    records = cursor.fetchall()
+        if user_db is not None:
+            if user == user_db.user_name and user_db.password == hashlib.sha256(password.encode('utf-8')).hexdigest():
+                print("User logged in")
+                return True, user_db
+            else:
+                print("User or password dont match")
+                return False
 
-    print(records)
-    
-    if records == []:
-        print("Erro")
-        return "Erro"
-
-    #print(records[0][4])
-    
-    if records[0][4] == hashlib.sha256(senha.encode('utf-8')).hexdigest():
-        print("Senha correta")
-        return True
-    
-    # if session:
-    #     if (session['logged_in'] == True):
-    #         return redirect(url_for('inicio'))
             
-
-    # elif (user_db.senha == hashlib.sha256(input("Senha: ").encode('utf-8')).hexdigest()):
-    #     session['logged_in'] = True
-    #     return redirect(url_for('inicio'))
-
-    # else:
-    #     flash('senha invalida')
-    #     return redirect(url_for('login'))
-
-def listaPessoas():
-    sql_select_query = """select * FROM usuario"""
-    cursor.execute(sql_select_query)
-    records = cursor.fetchall()
-    return records
+        else:
+            print("User not found")
+            return False

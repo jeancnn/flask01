@@ -15,31 +15,34 @@
     <title>{{ title }}</title>
 </head>
 <header>
-    {% block title %} <h1 class="title">{{ title }}</h1> {% endblock title %}
+  
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/users">List users</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/new_user">New user</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="logout">Logout</a>
+    </li>
+  </ul>
 
-
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-              <a class="nav-link" href="/">Lista de Pessoas</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="novo">Cadastro de Pessoas</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="logout">logout</a>
-            </li>
-          </ul>
+  {% block title %} <h1 class="title">{{ title }}</h1> {% endblock title %}
 
 </header>
 
     <!-- trecho de codigo python, alerta e informaçoe para o usuario -->
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-       <ul id="messages" class="list-unstyled">
-       {% for message in messages %}
-           <li class="alert alert-success">{{ message }}</li>
-       {% endfor %}
-       </ul>
+      <ul id="messages" class="list-unstyled">
+      {% for message in messages %}
+          <li class="alert alert-success">{{ message }}</li>
+      {% endfor %}
+      </ul>
     {% endif %}
     {% endwith %}
 
