@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, session, flash, url_for
 from main import app
-from controller.users_controller import listAllUsers, createUser
+from controller.users_controller import listUsers, createUser
 from controller.auth import validateLogin
 import calendar
 
@@ -26,7 +26,7 @@ def home():
         return redirect('/login')
 
 
-@app.route('/new_event', methods=['POST'])
+@app.route('/new_event/', methods=['POST'])
 def new_event():
     pass
 
@@ -36,7 +36,7 @@ def new_event():
 ###
 ### Login and Authenticate routes
 ###
-@app.route('/login')
+@app.route('/login/')
 def login():
     return render_template('login.html', titulo = 'User login')
 
@@ -56,7 +56,7 @@ def autenticate():
         flash('Invalid credentials')
         return redirect(url_for("login"))
 
-@app.route('/logout')
+@app.route('/logout/')
 def logout():
     session.clear()
     flash('You have been logged out')
@@ -67,13 +67,16 @@ def logout():
 ###
 ### User manupulation
 ###
-@app.get('/users')
+
+### List all users 
+@app.get('/users/')
 def users_list():
-    users_list = listAllUsers()
+    users_list = listUsers()
     print(users_list)
     return render_template('list_users.html', titulo = 'User list', users_list=users_list)
 
-@app.post('/users')
+### Create a new user on the database:
+@app.post('/users/')
 def new_user():
     
     print(request.form['user_name'], request.form['name'],request.form['password1'],request.form['admin'])
@@ -82,7 +85,20 @@ def new_user():
     flash(f"User {request.form['user_name']} created.")
     
     return redirect(url_for("home"))
-    
+
+### List a user by his ID
+@app.get('/users/<id>/')
+def listUserByID(id):
+    users_list = listUsers(id)
+    print(users_list)
+    return render_template('list_single_user.html', titulo = 'User list', user=users_list)
+
+### Deletes a user by his ID
+@app.delete('/users/<id>/')
+def deleteUserByID(id):
+    pass
+
+
 
 
 @app.route('/new_user')
