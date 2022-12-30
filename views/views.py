@@ -99,8 +99,6 @@ def deleteUserByID(id):
     pass
 
 
-
-
 @app.route('/new_user')
 def new_user_form():
     if session:
