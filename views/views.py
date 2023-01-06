@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, session, flash, url_for
 from main import app
-from controller.users_controller import listUsers, createUser
+from controller.users_controller import listUsers, createUser, updateUser
 from controller.auth import validateLogin
 import calendar
 
@@ -73,7 +73,7 @@ def logout():
 def users_list():
     users_list = listUsers()
     print(users_list)
-    return render_template('list_users.html', titulo = 'User list', users_list=users_list)
+    return render_template('list_users.html', title = 'User list', users_list=users_list)
 
 ### Create a new user on the database:
 @app.post('/users/')
@@ -91,15 +91,32 @@ def new_user():
 def listUserByID(id):
     users_list = listUsers(id)
     print(users_list)
-    return render_template('list_single_user.html', titulo = 'User list', user=users_list)
+    return render_template('list_single_user.html', title = 'User list', user=users_list)
+
+### List a user by his ID
+@app.get('/users/edit/<id>/')
+def editUserForm(id):
+    users_list = listUsers(id)
+    print(users_list)
+    return render_template('edit_user.html', title = 'Edit user: ' + users_list.name, user=users_list)
+
+### Edit a user by his ID
+@app.patch('/users/<id>/')
+def editUserByID(id):
+
+    isAdmin = False
+    if request.form['admin'] == "True":
+        isAdmin = True
+    updateUser(id, request.form['name'], isAdmin )
+    return "WOHO"
 
 ### Deletes a user by his ID
 @app.delete('/users/<id>/')
 def deleteUserByID(id):
     pass
 
-
-@app.route('/new_user')
+### Form to add new users
+@app.route('/users/new_user')
 def new_user_form():
     if session:
         if (session['user_logged_in'] == True):

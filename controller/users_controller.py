@@ -36,3 +36,18 @@ def createUser(user_name, name, password, admin=False):
         session.commit()
         session.refresh(new_user)
         print(new_user)
+        
+def updateUser(id, name, admin=False):
+    with Session(engine) as session:
+        user = listUsers(id)
+
+        user.name = name
+        user.admin = admin
+                
+        session.add(user)
+        session.commit()
+        session.refresh(user)
+        print("Updated hero:", user)
+        
+        return "teste feito"
+    
