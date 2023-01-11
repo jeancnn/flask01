@@ -3,6 +3,21 @@ body {
     color: white;
 }
 
+.content__wrapper {
+    display: grid;
+    grid-template-columns: minmax(180px, 250px) 2fr;
+}
+
+.content__wrapper .navigation {
+    display: flex;
+    flex-direction: column;
+    background-color: aquamarine;
+}
+
+.content__wrapper .navigation ul {
+    padding-left: 0px;
+}
+
 ul li {
     list-style-type:none;
 }
@@ -11,10 +26,39 @@ a {
     color: black;
 }
 
-.listapessoas {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.flex-justify-center {
+    justify-content: center;
 }
+
+.listapessoas ul {
+    display: grid;
+    grid-template-columns: minmax(30px, 50px) minmax(30px, 150px) 2fr 100px 1fr;
+    padding-left: 0px;
+    border: 1px solid #666;
+    margin: 0px;
+}
+
+.listapessoas ul:hover {
+    background-color: aquamarine;
+}
+
+.listapessoas .heading {
+    font-size: 1.5rem;
+    color: white;
+    background-color: #666;
+}
+
+.listapessoas ul .actions > a{
+    padding: 0px 1rem;
+}
+
+
+.listapessoas ul li {
+    display: inline-flex;
+    border-left: 1px solid #666;
+    padding: .1rem .4rem;
+}
+
 
 .listapessoas p {
     border-bottom: 1px solid #ccc;

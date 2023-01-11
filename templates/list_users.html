@@ -5,20 +5,24 @@
 {% block content %}
 <body>
     <div class="container listapessoas">
-        <ul>
-            {% for user in users_list %}
-                <li>ID: {{ user.id }} </li>
-                <li>Login: {{ user.user_name }}</li>
-                <li>Name: {{ user.name }}</li>
-                <li>Admin: {{ user.admin }}</li>
-                    <h3>Events:</h3>
-                    <ul>
-                    {% for event in user.events %}
-                        <li><h5>{{ event.title }}</h5> <p> {{ event.description }} </p> </li>
-                    {% endfor %}
-                    </ul>
-            {% endfor %}
+        <ul class="heading">
+            <li>ID</li>
+            <li>Login</li>
+            <li>Name</li>
+            <li class="flex-justify-center">Admin</li>
+            <li class="flex-justify-center">Actions</li>
         </ul>
+        {% for user in users_list %}
+        <ul>
+            <li>{{ user.id }}</li>
+            <li>{{ user.user_name }}</li>
+            <li>{{ user.name }}</li>
+            <li class="flex-justify-center">{{ user.admin }}</li>
+            <li class="actions flex-justify-center"><a href="#"><i class="fa-solid fa-ban"></i></a><a href="#"><i class="fa-solid fa-pencil"></i></a><a href="#"><i class="fa-solid fa-trash"></i></a></li>
+        </ul>
+
+            {% endfor %}
+
 
     </div>
     <a href="/new_user" class="btn btn-success">CADASTRO</a>

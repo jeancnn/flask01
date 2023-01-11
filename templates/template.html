@@ -11,6 +11,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
+    <script src="https://kit.fontawesome.com/bc833f16b2.js" crossorigin="anonymous"></script>
+
     <script src="/../static/script.js" defer></script>
 
     <link rel="stylesheet" href="/../static/style.css">
@@ -18,37 +20,51 @@
 </head>
 <header>
   
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a class="nav-link" href="/">Home</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/users">List users</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/users/new_user">New user</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/logout">Logout</a>
-    </li>
-  </ul>
-
   {% block title %} <h1 class="title">{{ title }}</h1> {% endblock title %}
 
 </header>
 
-    <!-- Code related to the flash part of Flask so that you can send notification messages -->
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul id="messages" class="list-unstyled">
-      {% for message in messages %}
-          <li class="alert alert-success">{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-    {% endwith %}
+<div class="content__wrapper">
 
-{% block content %}
-  Content to be replaced
-{% endblock content %}
+  <div class="navigation">
+  <nav>
+    <ul class="menu nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users">List users</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/new_user">New user</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </nav>
+
+  </div>
+
+  <div class="content">
+
+      <!-- Code related to the flash part of Flask so that you can send notification messages -->
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul id="messages" class="list-unstyled">
+        {% for message in messages %}
+            <li class="alert alert-success">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+      {% endwith %}
+
+  {% block content %}
+    Content to be replaced
+  {% endblock content %}
+
+  </div>
+
+</div>
+
 </html>
