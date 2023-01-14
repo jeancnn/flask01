@@ -51,3 +51,11 @@ def updateUser(id, name, admin=False):
         
         return "teste feito"
     
+def deleteUser(id):
+    with Session(engine) as session:
+        user = listUsers(id)
+        #If has a user to delete:
+        #if user:
+        session.delete(user)
+        session.commit()
+        return "APAGOU"

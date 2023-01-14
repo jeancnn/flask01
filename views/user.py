@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, session, flash, url_for
 from main import app
-from controller.users_controller import listUsers, createUser, updateUser
+from controller.users_controller import listUsers, createUser, updateUser, deleteUser
 
 ###
 ### User manupulation
@@ -33,7 +33,7 @@ def user():
 
 ### List, update and delete a user based on ID and the post type
 @app.route('/users/<id>', methods=['GET', 'POST', 'PATCH', 'DELETE'])
-def user_manager():
+def user_manager(id):
 
     match request.method:
         case 'GET':
@@ -55,7 +55,12 @@ def user_manager():
             
         case 'DELETE':
             ### Deletes a user by his ID
-            pass
+            deleteUser(id)
+            flash("Usuário deletado")
+
+            #return redirect(url_for("home"))
+            return "APAGOU!"
+            
         case _:
             pass
         
