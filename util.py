@@ -6,7 +6,7 @@ from controller.auth import validateLogin
 
 from database import engine
 from models.calendar_model import User, Event
-from controller.users_controller import listAllUsers
+#from controller.users_controller import listAllUsers
 
 def createUser():
     with Session(engine) as session:
@@ -61,9 +61,12 @@ print(test)
     #     for events in user.events:
     #         print(events)
 
-user = listAllUsers()
+# user = listAllUsers()
 
-for pessoa in user:
-    print(pessoa)
-    for evento in pessoa.events:
-        print(evento)
+# for pessoa in user:
+#     print(pessoa)
+#     for evento in pessoa.events:
+#         print(evento)
+
+
+createEvents()

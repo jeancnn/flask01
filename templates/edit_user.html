@@ -28,14 +28,13 @@
         <input type="checkbox" id="admin" name="admin" value="{{ user.admin }}">
         <label for="admin"> Admin user (can create other users)</label><br>
 
-        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="submit" class="btn btn-success edit">Save</button>
 
 
       </fieldset>
 
     </form>
-    <p>Teste:{{ user.admin }} </p>
-    <button class="btn btn-success teste">TESTE</button>
+    <p class="message"></p>
 
   </div>
 </body>
@@ -65,7 +64,7 @@ $("#userEditForm").submit(function(e){
 });
 
 $(document).ready( function () {
-    $('.teste').click( function(){
+    $('.edit').click( function(){
         data = "name=" + document.getElementById("name").value + "&admin=" + document.getElementById("admin").value
         console.log(data)
         var ajxReq = $.ajax( {
@@ -73,7 +72,7 @@ $(document).ready( function () {
             type : 'patch',
             data : data,
             success : function ( data ) {
-                $( "p" ).append( "Update request is Success." );
+                $( "p" ).append( "Update request has Succeded." );
             },
             error : function ( jqXhr, textStatus, errorMessage ) {
                 $( "p" ).append( "Update request has Fail.");

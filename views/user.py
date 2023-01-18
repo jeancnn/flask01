@@ -46,12 +46,13 @@ def user_manager(id):
         case 'PATCH':
             ### Edit a user by his ID
             isAdmin = False
+            #Verify if the new user has the Admin selected and convert it to a proper bolean type.
             if request.form['admin'] == "True":
                 isAdmin = True
             updateUser(id, request.form['name'], isAdmin )
-            flash(f"User {request.form['user_name']} altered.")
+            #flash(f"User {request.form['user_name']} altered.")
 
-            return redirect(url_for("home"))
+            return redirect(url_for("home")), 200
             
         case 'DELETE':
             ### Deletes a user by his ID

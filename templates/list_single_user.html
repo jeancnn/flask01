@@ -4,21 +4,31 @@
 
 {% block content %}
 <body>
-    <div class="container listapessoas">
-        <ul>
+    <div class="container">
+        <ul class="list__user">
                 <li>ID: {{ user.id }} </li>
                 <li>Login: {{ user.user_name }}</li>
                 <li>Name: {{ user.name }}</li>
                 <li>Admin: {{ user.admin }}</li>
-                    <h3>Events:</h3>
-                    <ul>
-                    {% for event in user.events %}
-                        <li><h5>{{ event.title }}</h5> <p> {{ event.description }} </p> </li>
-                    {% endfor %}
-                    </ul>
         </ul>
 
+        <h3>Events:</h3>
+        <ul class="list__events">
+        {% for event in user.events %}
+            <li>
+                <h5>{{ event.title }}</h5>
+                <p>Date: {{ event.data_event }} </p>
+                <p> {{ event.description }} </p>
+            </li>
+            <li>
+                <p>delete</p>
+                <p>edit</p>
+            </li>
+        {% endfor %}
+        </ul>
+
+
+
     </div>
-    <a href="/new_user" class="btn btn-success">CADASTRO</a>
 </body>
 {% endblock content %}

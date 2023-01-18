@@ -39,12 +39,12 @@ def user_manager():
             pass
         
         
-        ####loop events list user
-        <div class="events">
-                <p>Events:</p>
-                <ul>
-                {% for event in user.events %}
-                    <li><h5>{{ event.title }}</h5> <p> {{ event.description }} </p> </li>
-                {% endfor %}
-                </ul>
-            </div>
+# ####loop events list user
+# <div class="events">
+#         <p>Events:</p>
+#         <ul>
+#         {% for event in user.events %}
+#             <li><h5>{{ event.title }}</h5> <p> {{ event.description }} </p> </li>
+#         {% endfor %}
+#         </ul>
+#     </div>

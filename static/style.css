@@ -1,3 +1,9 @@
+:root {
+    --hover-color: rgba(0,0,0,.1);
+    --dark-gray-60: rgb(60,60,60);
+
+}
+
 body {
     background-color: rgba(0, 0, 0, .5);
     color: white;
@@ -11,18 +17,23 @@ body {
 .content__wrapper .navigation {
     display: flex;
     flex-direction: column;
-    background-color: aquamarine;
+    border-right: 1px solid var(--hover-color);
 }
 
 .content__wrapper .navigation ul {
     padding-left: 0px;
 }
 
+.content__wrapper .navigation ul li:hover {
+    background-color: var(--hover-color);
+}
+
+
 ul li {
     list-style-type:none;
 }
 
-a {
+a, a:hover {
     color: black;
 }
 
@@ -30,39 +41,49 @@ a {
     justify-content: center;
 }
 
-.listapessoas ul {
-    display: grid;
-    grid-template-columns: minmax(30px, 50px) minmax(30px, 150px) 2fr 100px 1fr;
+.list__user {
+    display: flex;
+    flex-direction: column;
     padding-left: 0px;
-    border: 1px solid #666;
-    margin: 0px;
+    margin-bottom: 2rem;
 }
 
-.listapessoas ul:hover {
-    background-color: aquamarine;
+.list__user:hover {
+    background-color: var(--hover-color);
 }
 
-.listapessoas .heading {
+.list__user .heading {
     font-size: 1.5rem;
     color: white;
     background-color: #666;
 }
 
-.listapessoas ul .actions > a{
+.list__user .actions > a {
     padding: 0px 1rem;
 }
 
 
-.listapessoas ul li {
+.list__user li {
     display: inline-flex;
-    border-left: 1px solid #666;
     padding: .1rem .4rem;
 }
 
 
-.listapessoas p {
+.list__user p {
     border-bottom: 1px solid #ccc;
 }
+
+.list__events {
+    padding-left: 0px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+.list__events li {
+    border: 1px solid var(--hover-color);
+    padding: .5rem 2rem;
+}
+
 
 .calendario {
     display: flex;
@@ -84,7 +105,7 @@ a {
 }
 
 .dias li:hover {
-    background-color: bisque;
+    background-color: var(--dark-gray-60);
     transform: scale3d(1.2, 1.2, 1.2);
 }
 
