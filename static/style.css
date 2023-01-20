@@ -38,8 +38,40 @@ a, a:hover {
 }
 
 .flex-justify-center {
+    display: flex;
     justify-content: center;
 }
+
+.user__list .user-grid-template {
+    display: grid;
+    grid-template-columns: minmax(20px, 40px) minmax(80px,1fr) minmax(250px,3fr) 1fr 1fr;
+    padding: .3rem 1rem;
+    margin-bottom: 0px;
+}
+
+.user__list .heading {
+    background-color: var(--dark-gray-60);
+    margin-bottom: 0px;
+}
+
+.user__list ul {
+    border: 1px solid var(--dark-gray-60);
+}
+
+.user__list ul:not(.heading):hover {
+    background-color: var(--hover-color);
+}
+
+.user__list .actions {
+    display: inline-flex;
+    gap: .5rem;
+}
+
+
+
+
+
+
 
 .list__user {
     display: flex;
